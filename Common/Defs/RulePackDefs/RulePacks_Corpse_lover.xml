@@ -1,0 +1,25 @@
+<!-- ========================================== -->
+  <!-- 社交互動：談論屍體 -->
+  <!-- ========================================== -->
+  
+<Defs>
+  <InteractionDef>
+    <defName>Chat_CorpseLover</defName>
+    <label>談論屍體</label>
+    <!-- 🔥 呼叫專屬 C# 類別，限制只有變態才會講這些話 -->
+    <workerClass>PseudoHumanMod.InteractionWorker_CorpseLover</workerClass>
+    <symbol>Things/Mote/SpeechSymbols/DeepTalk</symbol> 
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef]向[RECIPIENT_nameDef]熱情地分享了[corpse_topic]。</li>
+        <li>r_logentry->[INITIATOR_nameDef]拉著[RECIPIENT_nameDef]，興奮地探討了[corpse_topic]。</li>
+        <li>corpse_topic->屍體腐爛時那種美妙的氣味</li>
+        <li>corpse_topic->如何完美地防腐並保存一具屍體</li>
+        <li>corpse_topic->血液凝固時，色澤變化的藝術感</li>
+        <li>corpse_topic->冰冷肉體那種令人著迷的觸感</li>
+        <li>corpse_topic->把內臟掏空可以讓皮囊更完整的技巧</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+
+  </Defs>

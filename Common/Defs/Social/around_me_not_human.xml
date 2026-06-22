@@ -1,0 +1,20 @@
+<Defs>
+  <ThoughtDef>
+    <defName>HeardPseudoHuman_Social</defName>
+    <!-- 🔥 修改點 1：從 Thought_Memory 改成 Thought_MemorySocial -->
+    <thoughtClass>Thought_MemorySocial</thoughtClass> 
+    
+    <durationDays>0.5</durationDays>
+    <stackLimit>3</stackLimit>
+    <stackedEffectMultiplier>0.5</stackedEffectMultiplier>
+    
+    <stages>
+      <li>
+        <label>聽到詭異的胡話</label>  
+        <description>他剛剛說了些什麼...？那根本不是人類會說的話，這讓我毛骨悚然。</description>
+        <!-- 🔥 修改點 2：加入這行，設定社交好感度要扣多少 -->
+        <baseOpinionOffset>-5</baseOpinionOffset> 
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

@@ -1,0 +1,19 @@
+<Defs>
+<!-- ========================================== -->
+  <!-- 1. 定義特性：屍體癖好 (這就是你在遊戲裡找不到的本體！) -->
+  <!-- ========================================== -->
+  <TraitDef>
+    <defName>CorpseLover</defName>
+    <degreeDatas>
+      <li>
+        <label>屍體癖好</label>
+        <description>{PAWN_nameDef}對死亡與屍體有著異於常人的狂熱。對別人來說噁心恐懼的屍體，對{PAWN_pronoun}來說卻是美麗的藝術品。</description>
+        <commonality>0.3</commonality>
+      </li>
+    </degreeDatas>
+    <conflictingTraits>
+      <li>Psychopath</li>
+      <li>Bloodlust</li>
+    </conflictingTraits>
+  </TraitDef>
+  </Defs>

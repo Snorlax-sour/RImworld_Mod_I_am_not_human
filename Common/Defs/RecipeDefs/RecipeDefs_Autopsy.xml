@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RecipeDef>
+    <defName>AutopsyPseudoHuman</defName>
+    <label>進行屍檢 (排查偽人)</label>
+    <description>對人類屍體進行深度的醫學解剖，檢查內部器官是否有被替換的痕跡。這項工作將會徹底破壞屍體。</description>
+    <jobString>正在解剖屍體...</jobString>
+    <workAmount>1500</workAmount>
+    <workSpeedStat>MedicalOperationSpeed</workSpeedStat> 
+    <effectWorking>ButcherFlesh</effectWorking>
+    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
+    
+    <!-- 設定在藥物實驗桌上進行 -->
+    <recipeUsers>
+      <li>DrugLab</li>
+    </recipeUsers>
+
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>CorpsesHumanlike</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+
+    <fixedIngredientFilter>
+      <categories>
+        <li>CorpsesHumanlike</li>
+      </categories>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+
+  </RecipeDef>
+</Defs>

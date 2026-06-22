@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <packageId>snorlax114798.iamnothuman</packageId>
+
+  <name>No, I am not a human (尋找偽人) </name>
+  <author> snorlax114798 </author>
+  <description>Using anomoly DLC, which based on Metalhorror mechanism
+  option recommend to setting~.
+  </description>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+
+  <modVersion IgnoreIfNoMatchingField="True">0.0</modVersion>
+
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      
+    </li>
+   
+  </modDependencies>
+
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld.Royalty</li>
+    <li>Ludeon.RimWorld.Ideology</li>
+    <li>Ludeon.RimWorld.Biotech</li>
+    <li>Ludeon.RimWorld.Anomaly</li>
+    <li>Ludeon.RimWorld.Odyssey</li>
+  </loadAfter>
+</ModMetaData>
+

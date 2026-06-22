@@ -1,0 +1,101 @@
+<Defs>
+    <!-- ================= 社交面板顯示的主設定 ================= -->
+  <InteractionDef>
+    <defName>PseudoHuman_CreepyChatLog</defName> 
+    <label>詭異的囈語</label>
+    <workerClass>InteractionWorker</workerClass>
+    <symbol>Things/Mote/SpeechSymbols/Speech</symbol>
+    <logRulesInitiator>
+      <rulesStrings>
+        <!-- 🔥 修正點 1：INITIATOR 和 RECIPIENT 必須全部大寫！ -->
+        <li>r_logentry->[INITIATOR_nameDef]突然靠近[RECIPIENT_nameDef]並低語：「[creepy_whisper]」</li>
+        <li>r_logentry->在交談中，[INITIATOR_nameDef]毫無徵兆地對[RECIPIENT_nameDef]說：「[creepy_whisper]」</li>
+        <li>r_logentry->[INITIATOR_nameDef]眼神空洞，突然吐出一句：「[creepy_whisper]」</li>
+        <li>r_logentry->[INITIATOR_nameDef]的聲音突然變得像金屬摩擦一樣：「[creepy_whisper]」</li>
+        <li>r_logentry->[INITIATOR_nameDef]笑著說到一半，突然面無表情地說：「[creepy_whisper]」</li>
+      </rulesStrings>
+      
+      <!-- 🔥 修正點 2：加入 includes，把詞庫跟這個社交互動綁定起來 -->
+      <include>
+        <li>PseudoHuman_CreepyChat</li>
+      </include>
+    </logRulesInitiator>
+  </InteractionDef>
+
+  <!-- ================= 偽人對話生成引擎 ================= -->
+  <RulePackDef>
+    <defName>PseudoHuman_CreepyChat</defName>
+    <rulePack>
+      <rulesStrings>
+        <!-- 對話的各種句型結構 -->
+        <li>creepy_whisper->[direct_whisper]</li>
+        <li>creepy_whisper->[glitch_text]...[direct_whisper]</li>
+        <li>creepy_whisper->[ritual_chant]</li>
+        <li>creepy_whisper->[body_horror]</li>
+        
+        <!-- === 類型 1：直接的詭異對話 (融入你的世界觀設定) === -->
+        <li>direct_whisper->血肉...我們需要更多血肉...</li>
+        <li>direct_whisper->血原包讓我消化不良，這具身體對它很排斥...</li>
+        <li>direct_whisper->不要相信你的眼睛...我們早就滲透進來了...</li>
+        <li>direct_whisper->有時候當作沒看到，對你或許比較好...</li>
+        <li>direct_whisper->皮囊...這件人類的皮囊好緊，快把我勒窒息了...</li>
+        <li>direct_whisper->什麼時候可以停止這可笑的偽裝...</li>
+        <li>direct_whisper->他在看著你...就在通風管裡...</li>
+        <li>direct_whisper->昨晚斷電的時候，你真的覺得身邊的人是安全的嗎？</li>
+        <li>direct_whisper->人類多久需要眨一次眼？我有點忘記設定了...</li>
+        <li>direct_whisper->那個養食屍鬼的傢伙...食屍鬼看我的眼神不太對勁。</li>
+        <li>direct_whisper->機械族的權限...比想像中還要容易竄改。</li>
+        <li>direct_whisper->天上那個一直俯視我們的「視角」，以為自己掌控了一切...</li>
+        <li>direct_whisper->今天天氣真不... [錯誤：未找到人類情感模組]... 我是說，今天天氣真不錯。</li>
+
+        <!-- === 類型 2：隨機組合語法 (形容詞 + 名詞 + 動詞) === -->
+        <li>ritual_chant->[creepy_adj]的[creepy_noun]，[creepy_verb]。</li>
+        <li>ritual_chant->當[creepy_noun][creepy_verb]時，我們將不再需要這層皮囊。</li>
+        <li>ritual_chant->仔細聽...[creepy_adj]的[creepy_noun][creepy_verb]。</li>
+
+        <!-- === 類型 3：身體恐怖 (Body Horror) === -->
+        <li>body_horror->這具身體的[body_part]實在是太完美了...幾乎捨不得撕碎它。</li>
+        <li>body_horror->這具身體的[body_part]需要改造了，代謝率完全不對勁...</li>
+        <li>body_horror->我的[body_part]下面有東西在蠕動，你想看看嗎？</li>
+        <li>body_horror->骨頭摩擦的聲音太大了，你聽不到我的[body_part]在尖叫嗎？</li>
+        
+        <!-- === 詞彙庫：形容詞 === -->
+        <li>creepy_adj->虛空</li>
+        <li>creepy_adj->冰冷</li>
+        <li>creepy_adj->猩紅</li>
+        <li>creepy_adj->扭曲</li>
+        <li>creepy_adj->腐敗</li>
+        <li>creepy_adj->不協調</li>
+
+        <!-- === 詞彙庫：名詞 === -->
+        <li>creepy_noun->深淵</li>
+        <li>creepy_noun->真實</li>
+        <li>creepy_noun->痛苦之球的囈語</li>
+        <li>creepy_noun->血肉心臟的跳動</li>
+        <li>creepy_noun->黑暗中的觀察者</li>
+        <li>creepy_noun->福音書的最終指示</li>
+
+        <!-- === 詞彙庫：動詞 === -->
+        <li>creepy_verb->將會降臨</li>
+        <li>creepy_verb->正在甦醒</li>
+        <li>creepy_verb->即將撕裂一切</li>
+        <li>creepy_verb->正在注視著這裡</li>
+        <li>creepy_verb->渴望著同化</li>
+
+        <!-- === 詞彙庫：器官部位 === -->
+        <li>body_part->脊椎</li>
+        <li>body_part->視神經</li>
+        <li>body_part->內臟</li>
+        <li>body_part->下顎骨</li>
+        <li>body_part->皮膚</li>
+
+        <!-- === 詞彙庫：亂碼 (Glitch) === -->
+        <li>glitch_text->j41jk0J@jkpo12</li>
+        <li>glitch_text->#??!OOPKPAS</li>
+        <li>glitch_text->[System_Override_Failed]</li>
+        <li>glitch_text->ERROR_0x8000FFFF</li>
+        <li>glitch_text->01001000 01100101</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+</Defs>

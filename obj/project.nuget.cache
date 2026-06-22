@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "HxJfK2bC1t8=",
+  "success": true,
+  "projectFilePath": "D:\\Rimworld_develop_I_am_not_human\\PseudoHumanMod.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Black\\.nuget\\packages\\krafs.rimworld.ref\\1.6.4850\\krafs.rimworld.ref.1.6.4850.nupkg.sha512",
+    "C:\\Users\\Black\\.nuget\\packages\\lib.harmony\\2.4.2\\lib.harmony.2.4.2.nupkg.sha512",
+    "C:\\Users\\Black\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
+    "C:\\Users\\Black\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net48\\1.0.3\\microsoft.netframework.referenceassemblies.net48.1.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

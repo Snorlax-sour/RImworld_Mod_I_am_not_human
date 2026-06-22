@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <IncidentDef>
+    <defName>PseudoHuman_MidnightReplacement</defName>
+    <label>可疑的血跡</label>
+    <category>Misc</category> <!-- 歸類為雜項事件，不會有空襲警報 -->
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>PseudoHumanMod.IncidentWorker_MidnightReplacement</workerClass>
+    <baseChance>10</baseChance> <!-- 觸發機率，跟流星雨差不多 -->
+    <!-- <minRefireDays>10</minRefireDays> 至少間隔 10 天才能再次發生 -->
+  </IncidentDef>
+</Defs>

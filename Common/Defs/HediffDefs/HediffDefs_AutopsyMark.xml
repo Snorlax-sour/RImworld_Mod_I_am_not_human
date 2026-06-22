@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>AutopsyRecordMark</defName>
+    <label>屍檢縫合痕跡</label>
+    <description>這具屍體曾被切開並進行過醫學解剖，上面留有醫生的縫合痕跡與檢查紀錄。</description>
+    <!-- 呼叫我們等一下要寫的專屬 C# 類別來儲存文字 -->
+    <hediffClass>PseudoHumanMod.Hediff_AutopsyRecord</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.8)</defaultLabelColor>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+  </HediffDef>
+</Defs>

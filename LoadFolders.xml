@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LoadFolders>
+  <v1.6>
+    <li>Common</li> <!-- 直接讀取根目錄下的 Common -->
+    <li IfModActive="Ludeon.RimWorld.Biotech">v1.6_Biotech</li>
+    <!-- 動態判定：有裝這些 DLC 才會載入對應資料夾 -->
+    <li IfModActive="Ludeon.RimWorld.Royalty">v1.6_Royalty</li>
+    <li IfModActive="Ludeon.RimWorld.Ideology">v1.6_Ideology</li>
+    <li IfModActive="Ludeon.RimWorld.Odyssey">v1.6_Odyssey</li>
+    <li IfModActive="Ludeon.RimWorld.Anomaly">v1.6_Anomaly</li>
+  </v1.6>
+
+</LoadFolders>

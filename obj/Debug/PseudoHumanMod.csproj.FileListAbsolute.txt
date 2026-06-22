@@ -1,0 +1,14 @@
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.csproj.AssemblyReference.cache
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.GeneratedMSBuildEditorConfig.editorconfig
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.AssemblyInfoInputs.cache
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.AssemblyInfo.cs
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.csproj.CoreCompileInputs.cache
+D:\Rimworld_develop_I_am_not_human\Assemblies\PseudoHumanMod.dll
+D:\Rimworld_develop_I_am_not_human\Assemblies\PseudoHumanMod.pdb
+D:\Rimworld_develop_I_am_not_human\Assemblies\0Harmony.dll
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHu.56909421.Up2Date
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.dll
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.pdb
+D:\Rimworld_develop_I_am_not_human\Common\Assemblies\PseudoHumanMod.dll
+D:\Rimworld_develop_I_am_not_human\Common\Assemblies\PseudoHumanMod.pdb
+D:\Rimworld_develop_I_am_not_human\Common\Assemblies\0Harmony.dll

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RecipeDef>
+    <defName>InspectPseudoHuman</defName>
+    <label>外科檢查 (排查偽人)</label>
+    <description>對這名殖民者進行深度的外科手術與細胞切片檢查，確認其體內是否有偽人的組織。這項手術需要麻醉，且具有一定的風險。</description>
+    <workerClass>PseudoHumanMod.Recipe_InspectPseudoHuman</workerClass>
+    <jobString>正在進行深度外科檢查...</jobString>
+    <workAmount>2000</workAmount>
+    <hideBodyPartNames>true</hideBodyPartNames>
+    <isViolation>false</isViolation>
+      <!-- 🔥 核心修復：告訴遊戲這不是切除器官，不需要指定部位！ -->
+    <targetsBodyPart>false</targetsBodyPart> 
+    <!-- 手術相關設定 -->
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <deathOnFailedSurgeryChance>0.05</deathOnFailedSurgeryChance>
+    <anesthetize>true</anesthetize>
+    
+    <!-- 💡 新增：必須由醫生來做，且受醫療速度影響 -->
+    <workSkill>Medicine</workSkill>
+    <workSpeedStat>MedicalOperationSpeed</workSpeedStat>
+    <!-- 消耗 1 個最好的醫藥 -->
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+
+    <!-- 這個手術只能用在人類身上 -->
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+  </RecipeDef>
+</Defs>

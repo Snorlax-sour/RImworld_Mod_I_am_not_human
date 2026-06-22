@@ -1,0 +1,106 @@
+<Defs>
+<!-- ========================================== -->
+  <!-- 心情：親手製造屍體 (殺人) -->
+  <!-- ========================================== -->
+  <ThoughtDef>
+    <defName>KilledHumanlike_CorpseLover</defName>
+    <icon>Things/Mote/ThoughtSymbol/Skull</icon>
+    <showBubble>true</showBubble>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>3</durationDays>
+    <stackLimit>5</stackLimit>
+    <stages>
+      <li>
+        <label>製造了屍體</label>
+        <description>我親手剝奪了生命，創造了一具美麗的屍體！看著溫熱的生命變成冰冷的藝術品，這種權力感讓我瘋狂！</description>
+        <baseMoodEffect>10</baseMoodEffect> <!-- 🔥 殺人加 10 心情 -->
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ========================================== -->
+  <!-- 心情：愛人變成屍體 (究極變態) -->
+  <!-- ========================================== -->
+  <ThoughtDef>
+    <defName>MyLoverDied_CorpseLover</defName>
+    <icon>Things/Mote/ThoughtSymbol/Skull</icon>
+    <showBubble>true</showBubble>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>30</durationDays>
+    <stages>
+      <li>
+        <label>愛人變成了屍體</label>
+        <description>我原本以為失去你會讓我崩潰...但看著你冰冷、安靜、不會反抗的屍體，我發現我更愛現在的你了。</description>
+        <baseMoodEffect>20</baseMoodEffect> <!-- 🔥 愛人死了不但不難過，還加 15 心情！ -->
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  
+
+  <!-- ========================================== -->
+  <!-- 2. 定義心情：看到一般屍體 (無遞減狂歡版) -->
+  <!-- ========================================== -->
+<ThoughtDef>
+    <defName>ObservedCorpse_Lover</defName>
+    <icon>Things/Mote/ThoughtSymbol/Skull</icon>
+    <showBubble>true</showBubble>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>15</durationDays> <!-- 🔥 快樂持續時間延長到 1 天 -->
+    
+    <!-- 🔥 核心修改：乘數設為 1.0 (100%)，代表完全沒有遞減懲罰！每具屍體都給完整的快樂！ -->
+    <stackedEffectMultiplier>1.3</stackedEffectMultiplier> 
+    
+    <!-- 🔥 核心修改：上限拉高到 10 具屍體 -->
+    <stackLimit>999</stackLimit> 
+    
+    <stages>
+      <li>
+        <label>欣賞屍體</label>
+        <description>多麼美麗的死亡姿態...數量越多，這幅畫作就越壯觀！</description>
+        <baseMoodEffect>4</baseMoodEffect> <!-- 每看一具加 4 分 -->
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ========================================== -->
+  <!-- 3. 定義心情：看到腐爛屍體 (無遞減狂歡版) -->
+  <!-- ========================================== -->
+  <ThoughtDef>
+    <defName>ObservedRottingCorpse_Lover</defName>
+    <icon>Things/Mote/ThoughtSymbol/Skull</icon>
+    <showBubble>true</showBubble>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>5</durationDays>
+    
+    <stackedEffectMultiplier>2</stackedEffectMultiplier> <!-- 完全不遞減 -->
+    <stackLimit>999</stackLimit> <!-- 上限 999 具 -->
+    
+    <stages>
+      <li>
+        <label>欣賞腐爛的屍體</label>
+        <description>那股腐敗的氣味，殘缺的血肉...簡直是大自然的傑作！這讓我感到前所未有的極度愉悅！</description>
+        <baseMoodEffect>6</baseMoodEffect> <!-- 腐爛的更香，每看一具加 6 分 -->
+      </li>
+    </stages>
+  </ThoughtDef>
+    <!-- 「欣賞血肉異變 (Fascinating Mutation)」
+    當偽人「撕破臉（isRevealed = true）」、皮囊被撕裂爆出黑色組織的時候，
+    普通人可能會感到恐懼，但我們這位變態可以獲得一個 「目睹肉體異變 +8」 的好心情！ -->
+  <ThoughtDef>
+    <defName>ObservedMutation_Lover</defName>
+    <stackedEffectMultiplier>1.2</stackedEffectMultiplier> <!-- 完全不遞減 -->
+    <stackLimit>999</stackLimit> <!-- 上限 999 具 -->
+    <icon>Things/Mote/ThoughtSymbol/Skull</icon>
+    <showBubble>true</showBubble>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>4</durationDays>
+    <stages>
+      <li>
+        <label>目睹血肉異變</label>
+        <description>看著那件人類皮囊被撕裂，裡面鑽出未知的血肉結構...這比任何解剖課都要精彩！太美妙了！</description>
+        <baseMoodEffect>8</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

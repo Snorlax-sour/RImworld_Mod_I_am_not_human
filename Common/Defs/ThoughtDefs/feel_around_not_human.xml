@@ -1,0 +1,32 @@
+<Defs>
+  <ThoughtDef>
+    <defName>HeardPseudoHumanNonsense</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>3</durationDays>
+    <stackLimit>3</stackLimit> <!-- 最多疊加 3 次 -->
+    <stackedEffectMultiplier>0.4</stackedEffectMultiplier> <!-- 疊加時的分數乘數，可調整讓它變成 -5, -9, -12 之類的 -->
+    <stages>
+      <li>
+        <label>聽到詭異的胡話</label>
+        <description>他剛剛說了些什麼...？那根本不是人類會說的話，這讓我毛骨悚然。</description>
+        <baseMoodEffect>-5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- ========================================== -->
+  <!-- 創傷記憶：被偽人替換了生活 -->
+  <!-- ========================================== -->
+  <ThoughtDef>
+    <defName>ReplacedByPseudoHuman</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>30</durationDays> <!-- 🔥 長達 30 天的心理創傷 -->
+    <stages>
+      <li>
+        <label>被替身替代了生活</label>
+        <description>我被綁架並塞在暗無天日的通風管裡...而那個怪物卻用著我的臉，睡我的床，過著我的人生...太可怕了。</description>
+        <baseMoodEffect>-12</baseMoodEffect> <!-- 🔥 嚴重的扣分 -->
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

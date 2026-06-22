@@ -1,0 +1,80 @@
+<Defs>
+  <HediffDef>
+    <defName>PseudoHumanMark</defName>
+    <label>偽人 (Pseudo-human)</label>
+    <description>這是一個偽裝成人類的生物。</description>
+    <hediffClass>PseudoHumanMod.Hediff_PseudoHuman</hediffClass> <!-- 對應你寫的C# -->
+    <defaultLabelColor>(0.8, 0, 0)</defaultLabelColor>
+    <isBad>false</isBad> <!-- 設為false以免觸發自動治療 -->
+    <tendable>false</tendable>
+    <!-- 這裡開始設定動態階級 -->
+    <stages>
+      <!-- 階段 1：滿血到輕傷 (Severity 0 ~ 0.29) -->
+    <!-- 這裡可以放你說的近戰和閃避加成 -->
+     <li>
+        <minSeverity>0.0</minSeverity>
+        <label>潛伏</label>
+        <statOffsets>
+          <MeleeDodgeChance>15</MeleeDodgeChance>
+          <MeleeHitChance>5</MeleeHitChance>
+        </statOffsets>
+      </li>
+      
+      <!-- 階段 2：中度受傷 (Severity 0.3 ~ 0.59) -->
+      <li>
+        <minSeverity>0.1</minSeverity>
+        <label>皮囊撕裂</label>
+        <statOffsets>
+          <MeleeDodgeChance>30</MeleeDodgeChance>
+          <MeleeHitChance>15</MeleeHitChance>
+          <!-- 稍微增加移動速度 -->
+          <MoveSpeed>0.5</MoveSpeed> 
+        </statOffsets>
+      </li>
+
+      <!-- 階段 3：重傷 (Severity 0.6 ~ 0.89) -->
+      <li Class="PseudoHumanMod.HediffStage_PseudoHuman">
+        <minSeverity>0.3</minSeverity>
+        <label>異體增生</label>
+        <statOffsets>
+          <MeleeDodgeChance>50</MeleeDodgeChance>
+          <MeleeHitChance>30</MeleeHitChance>
+          <MoveSpeed>1.5</MoveSpeed>
+          <!-- 減輕受傷帶來的痛覺，讓他更難倒地 -->
+          <PainShockThreshold>0.8</PainShockThreshold>
+          <!-- 🔥 讓皮膚變得像防彈衣一樣硬 (1.0 代表 100% 基礎防禦) -->
+          <ArmorRating_Sharp>0.6</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.6</ArmorRating_Blunt>
+          <!-- 🔥 痛覺乘數設為 0！完全屏蔽痛覺，絕對不會因為痛而倒地，也不會因為痛而減速 -->
+        </statOffsets>
+          <!-- 🔥 新增：出血率乘數設為 0.5 (流血速度減半) -->
+        <!-- 🔥 修正點：流血乘數設為 0！(完全不流血) -->
+        <totalBleedFactor>0.2</totalBleedFactor> 
+        <painFactor>0</painFactor> 
+         <!-- 🌟 這就是我們在 C# 裡創造的新標籤！你可以自由填數字了！ -->
+        <regenPerSecond>1.0</regenPerSecond>
+      </li>
+
+      <!-- 階段 4：瀕死狂暴 (Severity 0.9 以上) -->
+      <li Class="PseudoHumanMod.HediffStage_PseudoHuman">
+        <minSeverity>0.5</minSeverity>
+        <label>終極狂暴</label>
+        <!-- 🌟 瀕死時每秒回 5 滴血，隨便你怎麼調！ -->
+        <regenPerSecond>5.0</regenPerSecond>
+        <statOffsets>
+          <!-- 變成極度危險的近戰怪物 -->
+          <MeleeDodgeChance>80</MeleeDodgeChance>
+          <MeleeHitChance>50</MeleeHitChance>
+          <MoveSpeed>5.0</MoveSpeed>
+          <ArmorRating_Blunt>1.2</ArmorRating_Blunt>
+          <ArmorRating_Sharp>1.2</ArmorRating_Sharp>
+          <!-- 🔥 痛覺乘數設為 0！完全屏蔽痛覺，絕對不會因為痛而倒地，也不會因為痛而減速 -->
+        </statOffsets>
+        <painFactor>0</painFactor> 
+         <!-- 🔥 新增：出血率乘數設為 0！(完全不流血，傷口直接封死) -->
+        <!-- 🔥 修正點：流血乘數設為 0！(完全不流血) -->
+        <totalBleedFactor>0</totalBleedFactor> 
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>
