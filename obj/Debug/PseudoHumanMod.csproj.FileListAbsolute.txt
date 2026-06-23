@@ -12,3 +12,4 @@ D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.pdb
 D:\Rimworld_develop_I_am_not_human\Common\Assemblies\PseudoHumanMod.dll
 D:\Rimworld_develop_I_am_not_human\Common\Assemblies\PseudoHumanMod.pdb
 D:\Rimworld_develop_I_am_not_human\Common\Assemblies\0Harmony.dll
+D:\Rimworld_develop_I_am_not_human\obj\Debug\PseudoHumanMod.sourcelink.json

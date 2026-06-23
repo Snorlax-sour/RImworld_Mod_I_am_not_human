@@ -21,6 +21,7 @@ namespace PseudoHumanMod
         public bool showNonsenseText = true; // 預設顯示氣泡
         public float generateChance = 0.10f; // 預設 10% 生成機率
         // 在 PseudoHumanSettings.cs 裡面新增：
+        public bool allowBasicEntities = true;      // 🔥 新增變數：基礎怪物
         public bool meltIntoSlime = false; // 預設：原生偽人死後會化為綠水
         public float pseudoHumanOccupy = 0.40f; // 預設 40% 佔有率
          // 🔥 新增：午夜暗殺的基礎機率 (預設 10%)
@@ -56,6 +57,7 @@ namespace PseudoHumanMod
             Scribe_Values.Look(ref generateChance, "generateChance", 0.10f);
             Scribe_Values.Look(ref pseudoHumanOccupy, "pseudoHumanOccupy", 0.40f);
             // 🔥 新增：告訴系統如何存檔/讀檔這兩個新變數
+               Scribe_Values.Look(ref allowBasicEntities, "allowBasicEntities", true); // 🔥 存檔
             Scribe_Values.Look(ref revealOnAttackedChance, "revealOnAttackedChance", 1.0f);
             Scribe_Values.Look(ref chainReactionChance, "chainReactionChance", 0.50f);
             Scribe_Values.Look(ref perfectActor, "perfectActor", true);      

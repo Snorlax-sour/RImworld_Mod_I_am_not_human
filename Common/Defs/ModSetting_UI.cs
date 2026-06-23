@@ -108,7 +108,8 @@ namespace PseudoHumanMod
                     listingStandard.CheckboxLabeled("開啟「死後現出真面目」 (根據玩家圖鑑解鎖進度，隨機變異出實體)", ref settings.spawnEntityOnDeath);
                     
                     if (settings.spawnEntityOnDeath)
-                    {
+                    {    // 🔥 新增：基礎怪物開關
+                        listingStandard.CheckboxLabeled(" └─ 允許變異為：基礎怪物 (血肉獸、凝血獸、竊視者)", ref settings.allowBasicEntities);
                         listingStandard.CheckboxLabeled(" └─ 允許變異為：進階怪物 (奇美拉、吞噬者、夜魔、恐懼融合體)", ref settings.allowAdvancedEntities);
                         listingStandard.CheckboxLabeled(" └─ 允許變異為：金屬異形 (Metalhorror)", ref settings.allowMetalhorror);
                         listingStandard.CheckboxLabeled(" └─ 允許變異為：亡魂 (Revenant) [極度危險]", ref settings.allowRevenant);
