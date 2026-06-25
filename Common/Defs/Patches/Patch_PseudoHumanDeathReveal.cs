@@ -20,7 +20,8 @@ namespace PseudoHumanMod
             }
         }
 
-       public static void Postfix(Pawn __instance, ref bool __state)
+        // 🔥 修正：加上了 DamageInfo? dinfo 參數，用來追查死因！
+        public static void Postfix(Pawn __instance, DamageInfo? dinfo, ref bool __state)
         {
             if (__state && __instance.Corpse != null && __instance.Corpse.Map != null)
             {
@@ -30,9 +31,23 @@ namespace PseudoHumanMod
                 HediffDef pseudoMarkDef = DefDatabase<HediffDef>.GetNamedSilentFail("PseudoHumanMark");
                 Hediff_PseudoHuman mark = __instance.health.hediffSet.GetFirstHediffOfDef(pseudoMarkDef) as Hediff_PseudoHuman;
                 
-                // 完美演到死：如果還沒現形，就當個普通屍體！
+                // ==========================================
+                // 🎭 完美演到死：如果還沒現形，就當個普通屍體！
+                // ==========================================
                 if (mark != null && !mark.isRevealed)
                 {
+                    // 🔥 核心修正：只攔截「真正的處決與安樂死」！
+                    // 排除友軍傷害、社交打架、或被玩家開槍打死
+                    if (dinfo.HasValue && dinfo.Value.Instigator != null && dinfo.Value.Instigator.Faction == Faction.OfPlayer)
+                    {
+                        // ExecutionCut 是監獄裡的「處決」指令
+                        // SurgicalCut 是病床上的「安樂死」或是「手術致死」
+                        if (dinfo.Value.Def == DamageDefOf.ExecutionCut || dinfo.Value.Def == DamageDefOf.SurgicalCut)
+                        {
+                            // 只有動用這種極刑，怪物才會記恨你！
+                            GameComponent_PseudoHumanTracker.CheckFourthWallBreak(__instance);
+                        }
+                    }
                     return; 
                 }
 
@@ -40,8 +55,6 @@ namespace PseudoHumanMod
                 // 💥 已經現形被擊殺的結算魔術
                 // ==========================================
                 bool hasHost = mark != null && mark.hasHostInVent;
-                
-                // 🔥 新增判定：死掉的這個人是不是我們殖民地的？
                 bool isOurColonist = __instance.Faction == Faction.OfPlayer;
 
                 if (hasHost)
@@ -63,11 +76,7 @@ namespace PseudoHumanMod
                     
                     if (dropPos != imposterPos)
                     {
-                        // ==========================================
-                        // 🎩 官方空間轉移魔術：不要拔除，直接改座標！
-                        // ==========================================
-                        __instance.Position = dropPos; // 直接把他的肉體座標移到通風管
-                       // 通知遊戲引擎：「這個人瞬間移動了！請安全地更新你的繪圖陣列！」
+                        __instance.Position = dropPos; 
                         __instance.Notify_Teleported(true, true); 
                     }
 
@@ -82,7 +91,6 @@ namespace PseudoHumanMod
                     ThoughtDef traumaThought = DefDatabase<ThoughtDef>.GetNamedSilentFail("ReplacedByPseudoHuman");
                     if (traumaThought != null) __instance.needs?.mood?.thoughts.memories.TryGainMemory(traumaThought);
 
-                    // 因為有真人掉下來 (通常都是我們的人)，所以這個一定要發信件！
                     Find.LetterStack.ReceiveLetter(
                         "隱藏的真相！",
                         $"隨著偽裝被擊破，這具假皮囊在原地迅速溶解成了一灘綠色黏液。\n\n與此同時，遠處天花板的通風管傳來一陣巨響，【{__instance.NameShortColored}】滿身是傷地從通風口掉了下來！\n\n原來真正的 {__instance.NameShortColored} 一直被藏在通風管裡，而剛剛被我們殺死的竟然是個替身！",
@@ -92,45 +100,31 @@ namespace PseudoHumanMod
                 }
                 else
                 {
-                        // ==========================================
-                    // 🔥 結局 B：原生偽人死亡 (延遲魔術秀！)
-                    // 為了解決火箭筒/爆炸武器的衝突，我們不要在這裡直接摧毀屍體或生怪物！
-                    // 我們把它丟給 RimWorld 底層的「單幀委派器 (LongEventHandler)」
-                    // 讓系統算完這場爆炸後，下一秒再把怪物變出來！
                     // ==========================================
-                    Corpse theCorpse = __instance.Corpse; // 把屍體存起來
-                    // 結局 B：原生偽人死亡 (讀取玩家的設定)
-                     // 🔥 1. 先呼叫實體魔術，並記錄「有沒有成功生出怪物？」
-                    // 這個動作會在目前所有的爆炸、子彈特效都跑完之後才執行
+                    // 結局 B：原生偽人死亡 (延遲魔術秀！)
+                    // ==========================================
+                    Corpse theCorpse = __instance.Corpse; 
+                    
                     LongEventHandler.ExecuteWhenFinished(() =>
                     {
-                        // 防呆：確保地圖跟屍體還在
                         if (theCorpse != null && !theCorpse.Destroyed && map != null)
                         {
+                            bool spawnedEntity = AnomalyEntitySpawner.TrySpawnEntity(imposterPos, map);
+
                             if (PseudoHumanCore.settings.meltIntoSlime)
                             {
-                                // 呼叫實體變異魔術！
-                                bool spawnedEntity = AnomalyEntitySpawner.TrySpawnEntity(imposterPos, map);
-
                                 FilthMaker.TryMakeFilth(imposterPos, map, ThingDefOf.Filth_Slime, 6);
-                                theCorpse.Destroy(DestroyMode.Vanish); // 安全地銷毀屍體
+                                theCorpse.Destroy(DestroyMode.Vanish); 
                                 
                                 if (!spawnedEntity)
                                 {
-                                    if (isOurColonist)
-                                    {
-                                        Find.LetterStack.ReceiveLetter("化為爛泥", $"這具皮囊在死後迅速溶解，化為了一灘發出惡臭的綠色黏液。\n\n牠並不是任何人的替身，牠打從一開始就是一頭徹頭徹尾的怪物...", LetterDefOf.NeutralEvent, new TargetInfo(imposterPos, map));
-                                    }
-                                    else
-                                    {
-                                        Messages.Message("一頭敵方偽人在死後化為了一灘爛泥。", new TargetInfo(imposterPos, map), MessageTypeDefOf.NeutralEvent, false);
-                                    }
+                                    if (isOurColonist) Find.LetterStack.ReceiveLetter("化為爛泥", $"這具皮囊在死後迅速溶解，化為了一灘發出惡臭的綠色黏液。\n\n牠並不是任何人的替身，牠打從一開始就是一頭徹頭徹尾的怪物...", LetterDefOf.NeutralEvent, new TargetInfo(imposterPos, map));
+                                    else Messages.Message("一頭敵方偽人在死後化為了一灘爛泥。", new TargetInfo(imposterPos, map), MessageTypeDefOf.NeutralEvent, false);
                                 }
                             }
                             else
                             {
-                                // 玩家設定保留屍體
-                                if (!AnomalyEntitySpawner.TrySpawnEntity(imposterPos, map))
+                                if (!spawnedEntity)
                                 {
                                     if (isOurColonist) Find.LetterStack.ReceiveLetter("偽人死亡", $"這具屍體的內部充滿了詭異的黑色組織。牠並不是任何人的替身，打從一開始就是個怪物...\n\n現在，這具駭人的屍體任由你們處置了。", LetterDefOf.NeutralEvent, new TargetInfo(imposterPos, map));
                                     else Messages.Message("一頭敵方偽人被擊殺，留下了一具充滿異星組織的屍體。", new TargetInfo(imposterPos, map), MessageTypeDefOf.NeutralEvent, false);
@@ -141,7 +135,5 @@ namespace PseudoHumanMod
                 }
             }
         }
-
-
     }
 }
