@@ -210,9 +210,9 @@ namespace PseudoHumanMod
                         {
                             // 官方設定：5天發作，30天昏迷，60天致死。
                             // 我們把它死死卡在 29.5 天！他會痛不欲生、狂砸房間，但「絕對不會昏倒或死亡」！
-                            if (h.Severity > 0.49f)
+                            if (h.Severity > 5f)
                             {
-                                h.Severity = 0.49f;
+                                h.Severity = 5f;
                             }
                             if (Prefs.DevMode)
                             {
@@ -254,7 +254,7 @@ namespace PseudoHumanMod
                         // 0.8 = 極度飢餓 (重度昏迷)
                         // 1.0 = 餓死
                         // 我們把他卡在 0.99，他會餓到倒在地上爬不起來(裝死)，但他永遠不會餓死！
-                        if (h.Severity > 0.7f) h.Severity = 0.7f;
+                        if (h.Severity > 0.8f) h.Severity = 0.7f;
                         continue;
                     }
                 }

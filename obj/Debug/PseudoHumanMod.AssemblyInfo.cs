@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PseudoHumanMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51b96cecf6c8b899a9aee06c08e9781f08dcb39b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73e9f18122636391f21d8e0e8f3d7ab2215186c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("PseudoHumanMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PseudoHumanMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
