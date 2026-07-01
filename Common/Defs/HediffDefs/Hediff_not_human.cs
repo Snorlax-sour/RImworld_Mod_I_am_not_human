@@ -3,6 +3,7 @@ using Verse;
 using UnityEngine;
 using System.Linq;
 using Verse.AI; // 🔥 必須加這行！食屍鬼才能發動攻擊 (StartJob)
+
 namespace PseudoHumanMod
 {
     // ==========================================
@@ -63,10 +64,20 @@ namespace PseudoHumanMod
                 // ==========================================
                 if (isRevealed)
                 {
-                    // 【撕破臉狀態】：解放全部力量！
-                    // 根據失去的血量計算嚴重度，可以進入階段 2、3、4
+                     // 【撕破臉狀態】：解放全部力量！
                     float lostHealth = 1.0f - pawn.health.summaryHealth.SummaryHealthPercent;
-                    this.Severity = Mathf.Max(0.01f, lostHealth);
+
+                    // ==========================================
+                    // 🩸 全新計算：斷肢帶來的極度憤怒！
+                    // ==========================================
+                    // 算出他目前有幾個「真正斷掉的部位」(GetMissingPartsCommonAncestors)
+                    int missingPartsCount = pawn.health.hediffSet.GetMissingPartsCommonAncestors().Count;
+                    
+                    // 每斷一個部位，額外增加 0.25 (25%) 的嚴重度！
+                    float missingPartPenalty = missingPartsCount * 0.25f;
+
+                    // 將流血受傷與斷肢的嚴重度加總！(最高鎖定在 0.99，避免超過 1.0 引發預期外的 Bug)
+                    this.Severity = Mathf.Clamp(lostHealth + missingPartPenalty, 0.01f, 0.99f);
 
                     // 執行恐怖的肉體再生邏輯 (讀取 XML 設定)
                     HediffStage_PseudoHuman currentStage = this.CurStage as HediffStage_PseudoHuman;
@@ -93,20 +104,37 @@ namespace PseudoHumanMod
                         // 🔥 2. 全新：斷肢重生系統 (Body Part Regeneration)
                         // ==========================================
                         // 為了平衡與視覺節奏，設定 5% 的機率 (大約每 20 秒長出一個器官)
-                        if (Rand.Chance(0.05f))
+                        // ==========================================
+                        // 🔥 2. 終極動態斷肢重生系統 (支援超過 100% 多重再生！)
+                        // ==========================================
+                        float recover_missing_part_rate = this.Severity * 100.0f * 0.05f;
+
+                        // 數學魔術 1：抽出「整數」部分 (例如 4.5 會抽出 4)
+                        int guaranteedHeals = Mathf.FloorToInt(recover_missing_part_rate);
+                        
+                        // 數學魔術 2：抽出「小數」部分 (例如 4.5 - 4 = 0.5，也就是 50% 機率)
+                        float extraChance = recover_missing_part_rate - guaranteedHeals;
+                        
+                        // 計算這 1 秒內，到底要長出幾個部位？
+                        // (必定生長數 + 骰中機率多送 1 個)
+                        int totalHeals = guaranteedHeals + (Rand.Chance(extraChance) ? 1 : 0);
+
+                        // 使用迴圈，讓他瞬間長出複數器官！
+                        for (int i = 0; i < totalHeals; i++)
                         {
-                            // GetMissingPartsCommonAncestors() 是 RimWorld 超神的內建方法
-                            // 它會自動找「最根部」的斷肢。例如整條手臂斷了，它會先長手臂，不會直接長手指。
                             Hediff_MissingPart missingPart = pawn.health.hediffSet.GetMissingPartsCommonAncestors().FirstOrDefault();
                             
                             if (missingPart != null)
                             {
-                                // 強制移除「部位遺失」的狀態，斷肢瞬間長回來了！
+                                // 長出一個部位！
                                 pawn.health.RemoveHediff(missingPart);
-                                
-                                // 丟出綠色黏液與恐怖的提示字
-                                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "血肉增生...", Color.green);
+                                MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "血肉暴增！", Color.green);
                                 FilthMaker.TryMakeFilth(pawn.Position, pawn.Map, ThingDefOf.Filth_Slime, 1);
+                            }
+                            else
+                            {
+                                // 防呆：如果身體已經全部長滿了(沒有斷肢)，就提早結束迴圈！
+                                break; 
                             }
                         }
                     }
@@ -164,6 +192,71 @@ namespace PseudoHumanMod
                         }
                     }
 
+                }
+                // 掃描他身上所有的健康狀態
+                for (int i = 0; i < pawn.health.hediffSet.hediffs.Count; i++)
+                {
+                    Hediff h = pawn.health.hediffSet.hediffs[i];
+                    string defName = h.def.defName;
+                    if (Prefs.DevMode)
+                    {
+                        Log.Message($"[偽人測試] who: {pawn.Name} defname: {defName} type: {h.GetType()}");
+                    }
+                    // ------------------------------------------
+                        // 1. 生技 DLC 的「基因依賴 (如呀呦粉、果汁依賴)」
+                        // 🔥 最強黑魔法：直接判斷它的底層類別是不是 Hediff_ChemicalDependency！
+                        // ------------------------------------------
+                        if (h is Hediff_ChemicalDependency || h.def.defName.Contains("GeneticDrugNeed") )
+                        {
+                            // 官方設定：5天發作，30天昏迷，60天致死。
+                            // 我們把它死死卡在 29.5 天！他會痛不欲生、狂砸房間，但「絕對不會昏倒或死亡」！
+                            if (h.Severity > 0.49f)
+                            {
+                                h.Severity = 0.49f;
+                            }
+                            if (Prefs.DevMode)
+                            {
+                                Log.Message($"[偽人測試] who: {pawn.Name} defname: {defName} type: {h.GetType()}");
+                                Log.Message($"[偽人測試] who: {pawn.Name} defname: {defName} severity: {h.Severity}");
+                            }
+                            continue; // 處理完了，檢查下一個病
+                            
+                        }
+
+                        // ------------------------------------------
+                        // 2. 血族的「死眠耗竭 (DeathrestExhaustion)」
+                        // ------------------------------------------
+                        if (defName == "DeathrestExhaustion")
+                        {
+                            // 官方設定：超過 1.0 會導致強制致命昏迷
+                            // 我們卡在 0.99，讓他極度疲勞但不倒地
+                            if (h.Severity > 0.99f) h.Severity = 0.99f;
+                            continue;
+                        }
+
+                    // ------------------------------------------
+                        // 3. 原版毒品戒斷 (Withdrawal) 與 渴血症
+                        // ------------------------------------------
+                        if (defName.Contains("Dependency") || 
+                            defName.Contains("Deficiency") || 
+                            defName.Contains("Withdrawal") || 
+                            defName == "HemogenCraving")
+                        {
+                            // 其他常規戒斷症的滿級通常是 1.0
+                            if (h.Severity > 0.65f) h.Severity = 0.65f;
+                        }
+                        // ==========================================
+                    // 🔥 4. 新增：營養不良 (Malnutrition) 鎖血！
+                    // ==========================================
+                    if (defName == "Malnutrition")
+                    {
+                        // 原版營養不良：
+                        // 0.8 = 極度飢餓 (重度昏迷)
+                        // 1.0 = 餓死
+                        // 我們把他卡在 0.99，他會餓到倒在地上爬不起來(裝死)，但他永遠不會餓死！
+                        if (h.Severity > 0.7f) h.Severity = 0.7f;
+                        continue;
+                    }
                 }
             }
         }

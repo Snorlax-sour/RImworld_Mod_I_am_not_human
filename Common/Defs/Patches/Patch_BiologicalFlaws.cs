@@ -27,9 +27,17 @@ namespace PseudoHumanMod
             {
                 string defName = hediff.def.defName;
                 
-                // 免疫：食物中毒、毒素累積、以及生技 DLC 的戒斷症狀(Withdrawal)與缺乏症(Deficiency)
-                if (defName == "FoodPoisoning" || defName == "ToxicBuildup" || 
-                    defName.Contains("Withdrawal") || defName.Contains("Deficiency"))
+                 // ==========================================
+                // 🔥 終極免疫清單
+                // 1. 消化/毒素系統：食物中毒、毒素累積
+                // 2. 寄生蟲系統：腸胃蛔蟲(GutWorms)、肌肉寄生蟲(MuscleParasites)
+                
+                // ==========================================
+                if (defName == "FoodPoisoning" || 
+                    defName == "ToxicBuildup" || 
+                    defName == "GutWorms" || 
+                    defName == "MuscleParasites" )
+                    
                 {
                     // 🔥 直接回傳 false！強制阻擋這個狀態！
                     return false; 
